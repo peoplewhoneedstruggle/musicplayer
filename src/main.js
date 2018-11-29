@@ -6,11 +6,10 @@ import fastclick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import jquery from 'jquery'
-// Vue.config.productionTip = false
 import 'common/stylus/index.styl'
+// Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$ = jquery
-window.jquery = window.$ = jquery
 fastclick.attach(document.body)
 
 /* eslint-disable no-new */
