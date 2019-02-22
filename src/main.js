@@ -12,9 +12,9 @@ Vue.use(VueAwesomeSwiper)
 Vue.prototype.$ = jquery
 fastclick.attach(document.body)
 
-/* eslint-disable no-new */
+/* eslint-disable */
 new Vue({
-  el: '#app',
-  render: h => h(App),
-  router
+    el: '#app',
+    render: h => h(App),
+    router
 })

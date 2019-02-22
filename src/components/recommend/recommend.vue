@@ -17,6 +17,7 @@
 </template>
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import axios from 'axios'
 export default {
   mounted () {
     this.Banner()// 获取轮播图数据
@@ -54,13 +55,8 @@ export default {
   methods: {
     Banner () {
       var _this = this
-      this.$.ajax({
-        url: 'http://localhost:3000/banner',
-        type: 'get',
-        data: '',
-        success (data) {
-          _this.banner.splice(0, 0, ...data.banners)
-        }
+      axios.get('http://localhost:3000/banner').then(response => {
+        _this.banner.splice(0, 0, ...response.data.banners)
       })
     },
     getSongList () {
@@ -75,6 +71,8 @@ export default {
         }
       })
     }
+  },
+  beforeDestroy () {
   }
 }
 
@@ -83,9 +81,11 @@ export default {
 .banner
   width 100%
 .banner__dot
-  top 90%
+  top 80%
   left 50%
   margin-left -32px
+.swiper-pagination-bullet
+  margin 0 5px
 .songtitle
   margin 5px 0 0 5px
 .songList

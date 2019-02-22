@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div v-for="(item, index) in rank" :key=index class="rank">
-      <div>
-        <img :src="item.coverImgUrl" class="rank__img" alt="排行榜图片">
-      </div>
+    <div v-for="(item, index) in rank" :key="index" class="rank">
+      <img :src="item.coverImgUrl" class="rank__img" alt="排行榜图片">
+      <span class="description">{{item.description}}</span>
     </div>
   </div>
 </template>
@@ -34,8 +33,19 @@ export default {
 }
 </script>
 <style lang="stylus" scoped rel="stylesheet/stylus">
-.rank
-  width 10rem
-.rank__img
-  width 100%
+.rank__img {
+  width: 10rem;
+}
+
+.rank {
+  position: relative;
+}
+
+.description {
+  width: 50%;
+  position: absolute;
+  transform: translate(-50%, -51%);
+  top: 50%;
+  left: 70%;
+}
 </style>
