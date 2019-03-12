@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-for="(item, index) in rank" :key="index" class="rank">
-      <img :src="item.coverImgUrl" class="rank__img" alt="排行榜图片">
-      <span class="description">{{item.description}}</span>
+    <div v-for="item in rank" :key="item.id" class="rank" @click=getListDetail(item.id)>
+      <img v-lazy="item.coverImgUrl" class="rank__img" alt="排行榜图片">
+      <span class="singer__List">{{item.description||item.name}}</span>
     </div>
   </div>
 </template>
@@ -18,34 +18,31 @@ export default {
   },
   methods: {
     getRank () {
-      let _this = this
-      this.$.ajax({
-        url: 'http://localhost:3000/toplist',
-        type: 'get',
-        data: '',
-        success (data) {
-          _this.rank.splice(0, 0, ...data.list)
-          console.log(_this.rank)
-        }
+      this.axios.get('http://localhost:3000/toplist/detail').then(response => {
+        this.rank = [...response.data.list]
+        console.log(response)
       })
+    },
+    getListDetail (id) {
+      this.$router.push({path: `/rank/${id}`})
     }
   }
 }
 </script>
 <style lang="stylus" scoped rel="stylesheet/stylus">
-.rank__img {
-  width: 10rem;
-}
+.rank__img
+  width 8rem
+  height 8rem
+  border-radius 5px
+  margin 5px
 
-.rank {
-  position: relative;
-}
+.rank
+  position relative
+  display flex
 
-.description {
-  width: 50%;
-  position: absolute;
-  transform: translate(-50%, -51%);
-  top: 50%;
-  left: 70%;
-}
+.singer__List
+  margin auto
+  padding 5px
+.singer__item
+  margin 5px
 </style>

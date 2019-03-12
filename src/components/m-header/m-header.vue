@@ -27,7 +27,6 @@ export default {}
     display: inline-block;
     vertical-align: top;
     margin-top: 6px;
-    width: 30px;
     height: 32px;
     margin-right: 9px;
     background-size: 30px 32px;
@@ -44,7 +43,6 @@ export default {}
     position: absolute;
     top: 0;
     right: 0;
-
     .icon-mine {
       display: block;
       padding: 12px;

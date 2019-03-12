@@ -1,14 +1,14 @@
 <template>
   <div>
   <swiper :options="swiperOption">
-    <swiper-slide v-for="(item ,index) in banner" :key=index ><img :src=item.imageUrl class="banner"></swiper-slide>
+    <swiper-slide v-for="item in banner" :key=item.imageUrl ><img :data-src=item.imageUrl class="banner swiper-lazy"></swiper-slide>
     <div class="swiper-pagination banner__dot"></div>
   </swiper>
   <div class="songtitle">推荐歌单 ></div>
   <div class="songList">
-  <div class="songList__song" v-for="(item, index) in songList" :key=index >
+  <div class="songList__song" v-for="item in songList" :key=item.picUrl >
     <div>
-    <img :src="item.picUrl" class="songList__img" alt="歌单背景图">
+    <img v-lazy="item.picUrl" class="songList__img" alt="歌单背景图">
     <div class="songList__text">{{item.name}}</div>
     </div>
   </div>
@@ -17,10 +17,9 @@
 </template>
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import axios from 'axios'
 export default {
   mounted () {
-    this.Banner()// 获取轮播图数据
+    this.getBanner()// 获取轮播图数据
     this.getSongList()
   },
   data () {
@@ -38,7 +37,12 @@ export default {
         },
         pagination: {
           el: '.swiper-pagination',
-          type: 'bullets'
+          type: 'bullets',
+          clickable: true
+        },
+        lazy: {
+          loadPrevNext: true,
+          loadPrevNextAmount: 2
         },
         effect: 'fade',
         fadeEffect: {
@@ -53,22 +57,14 @@ export default {
     swiperSlide
   },
   methods: {
-    Banner () {
-      var _this = this
-      axios.get('http://localhost:3000/banner').then(response => {
-        _this.banner.splice(0, 0, ...response.data.banners)
+    getBanner () {
+      this.axios.get('http://localhost:3000/banner').then(response => {
+        this.banner = [...response.data.banners]
       })
     },
     getSongList () {
-      var _this = this
-      this.$.ajax({
-        url: 'http://localhost:3000/personalized',
-        type: 'get',
-        data: '',
-        success (data) {
-          _this.songList.splice(0, 0, ...data.result)
-          _this.songList.splice(9)
-        }
+      this.axios.get('http://localhost:3000/personalized').then(response => {
+        this.songList = [...response.data.result]
       })
     }
   },
@@ -79,13 +75,15 @@ export default {
 </script>
 <style lang="stylus" scoped rel="stylesheet/stylus">
 .banner
-  width 100%
+  width 90%
+.swiper-container
+  text-align center
+  margin 15px 0
 .banner__dot
+  position absolute
   top 80%
   left 50%
-  margin-left -32px
-.swiper-pagination-bullet
-  margin 0 5px
+  transform translate(-50%,-50%)
 .songtitle
   margin 5px 0 0 5px
 .songList
@@ -96,8 +94,9 @@ export default {
   max-height 3rem
   text-align center
 .songList__song
-  width 30.5%
-  padding 10px 0 0 5px
+  width 30%
+  padding 10px 0 0 10px
 .songList__img
   width 100%
+  border-radius 5px
 </style>
