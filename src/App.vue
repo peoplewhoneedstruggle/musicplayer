@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <m-header></m-header>
-    <tab></tab>
-    <router-view></router-view>
+    <m-header v-show="this.$route.meta.show"></m-header>
+    <tab v-show="this.$route.meta.show"></tab>
+    <router-view><router-view></router-view></router-view>
   </div>
 </template>
 <script type="text/ecmascript-6">

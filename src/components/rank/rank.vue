@@ -20,19 +20,17 @@ export default {
     getRank () {
       this.axios.get('http://localhost:3000/toplist/detail').then(response => {
         this.rank = [...response.data.list]
-        console.log(response)
       })
     },
     getListDetail (id) {
-      this.$router.push({path: `/rank/${id}`})
+      this.$router.push({path: `/recommend/${id}`})
     }
   }
 }
 </script>
 <style lang="stylus" scoped rel="stylesheet/stylus">
 .rank__img
-  width 8rem
-  height 8rem
+  height 7.5rem
   border-radius 5px
   margin 5px
 
@@ -45,4 +43,6 @@ export default {
   padding 5px
 .singer__item
   margin 5px
+.update__frequency
+  text-align center
 </style>
