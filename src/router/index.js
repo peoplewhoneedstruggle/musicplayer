@@ -4,15 +4,15 @@ import Recommend from 'components/recommend/recommend'
 import Singer from 'components/song-list/song-list'
 import Rank from 'components/rank/rank'
 import Search from 'components/search/search'
-// import RankDetail from 'components/rank-detail/rank-detail'
+import RankDetail from 'components/rank-detail/rank-detail'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [{
     path: '/',
     redirect: '/recommend'
-  },
-  {
+  }, {
     path: '/recommend',
     name: '',
     component: Recommend,
@@ -20,8 +20,7 @@ export default new Router({
       title: '推荐页面',
       show: true
     }
-  },
-  {
+  }, {
     path: '/song-list',
     name: '',
     component: Singer,
@@ -29,8 +28,7 @@ export default new Router({
       title: '歌单页面',
       show: true
     }
-  },
-  {
+  }, {
     path: '/rank',
     name: '',
     component: Rank,
@@ -39,15 +37,14 @@ export default new Router({
       show: true
     },
     children: [{
-      path: '/rank/:i',
-      component: Search,
+      path: ':id',
+      component: RankDetail,
       meta: {
-        title: '推荐页面',
+        title: '歌单详情',
         show: false
       }
     }]
-  },
-  {
+  }, {
     path: '/search',
     name: '',
     component: Search,
@@ -55,6 +52,5 @@ export default new Router({
       title: '搜索页面',
       show: true
     }
-  }
-  ]
+  }]
 })

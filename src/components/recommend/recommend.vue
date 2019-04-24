@@ -1,19 +1,23 @@
 <template>
-  <div>
-  <swiper :options="swiperOption">
-    <swiper-slide v-for="item in banner" :key=item.imageUrl >
-      <img :data-src=item.imageUrl class="banner swiper-lazy">
-    </swiper-slide>
-    <div class="swiper-pagination banner__dot"></div>
-  </swiper>
-  <div class="songtitle">推荐歌单 ></div>
-  <div class="songList">
-  <div class="songList__song" v-for="item in songList" :key=item.picUrl >
-      <div class="songList__listens">{{fomate(item.playCount)}}</div>
-    <img v-lazy="item.picUrl" class="songList__img" alt="歌单背景图" @click="getListDetail(item.id)">
-    <div class="songList__text">{{item.name}}</div>
-  </div>
-  </div>
+  <div  class="parent-dom">
+    <vue-scroll :ops="ops" >
+      <div class="child-dom">
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="item in banner" :key=item.imageUrl >
+            <img :data-src=item.imageUrl class="banner swiper-lazy">
+          </swiper-slide>
+          <div class="swiper-pagination banner__dot"></div>
+        </swiper>
+        <div class="songtitle">推荐歌单 ></div>
+        <div class="songList">
+          <div class="songList__song" v-for="item in songList" :key=item.picUrl >
+              <div class="songList__listens">{{fomate(item.playCount)}}</div>
+            <img v-lazy="item.picUrl" class="songList__img" alt="歌单背景图" @click="getListDetail(item.id)">
+            <div class="songList__text">{{item.name}}</div>
+          </div>
+        </div>
+      </div>
+    </vue-scroll>
   </div>
 </template>
 <script>
@@ -27,6 +31,7 @@ export default {
     return {
       banner: [],
       songList: [],
+      // 轮播图属性
       swiperOption: {
         autoplay: {
           delay: 3000,
@@ -54,6 +59,18 @@ export default {
           crossFade: true
         },
         grabCursor: true
+      },
+      // 滚动条属性
+      ops: {
+        vuescroll: {
+          sizeStrategy: 'percent',
+          detectResize: true
+        },
+        scrollPanel: {
+          scrollingX: false
+        },
+        rail: {},
+        bar: {}
       }
     }
   },
@@ -133,4 +150,7 @@ export default {
   opacity 1
 .my-bullet-active
   background red
+.parent-dom
+  height calc(100% - 5rem)
+  width 100%
 </style>

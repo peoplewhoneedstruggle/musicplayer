@@ -2,7 +2,9 @@
   <div id="app">
     <m-header v-show="this.$route.meta.show"></m-header>
     <tab v-show="this.$route.meta.show"></tab>
-    <router-view><router-view></router-view></router-view>
+    <keep-alive>
+    <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -12,9 +14,27 @@ export default {
   components: {
     MHeader,
     Tab
+  },
+  data () {
+    return {
+      ops: {
+        vuescroll: {
+          mode: 'native',
+          sizeStrategy: 'percent',
+          detectResize: true
+        },
+        scrollPanel: {},
+        rail: {},
+        bar: {}
+      }
+    }
   }
 }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus">
+#app
+  height 100%
+html,body
+  height 100%
 </style>
