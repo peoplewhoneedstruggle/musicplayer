@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <m-header v-show="this.$route.meta.show"></m-header>
-    <tab v-show="this.$route.meta.show"></tab>
+    <transition >
+      <div class="header" v-show="this.$route.meta.show">
+        <m-header ></m-header>
+        <tab ></tab>
+      </div>
+    </transition>
     <keep-alive>
     <router-view></router-view>
     </keep-alive>

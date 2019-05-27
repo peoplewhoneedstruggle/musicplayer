@@ -1,20 +1,23 @@
 <template>
-  <div  class="parent-dom">
-    <vue-scroll :ops="ops" >
-      <div class="child-dom">
-        <router-link to="/rank/2131">
-        <div v-for="item in rank" class="rank" :key="item.id" @click=getListDetail(item.id) v-show="toggleShow">
+  <div id="rank">
+    <div class="rankList" v-show="toggleShow">
+    <transition >
+    <div  class="parent-dom" >
+      <vue-scroll :ops="ops" >
+        <div v-for="item in rank" class="rank" :key="item.id" @click=getListDetail(item.id) >
           <img v-lazy="item.coverImgUrl" class="rank__img" alt="排行榜图片">
           <span class="singer__List animated">{{item.description||item.name}}</span>
         </div>
-        </router-link>
-        <keep-alive>
-          <transition leave-active-class="animated bounceOutRight">
-          <router-view></router-view>
-          </transition>
-        </keep-alive>
-      </div>
-    </vue-scroll>
+      </vue-scroll>
+    </div>
+    </transition>
+    </div>
+    <!-- <keep-alive> -->
+      <transition enter-class="enterClass" enter-to-class="enterToClass" enter-active-class="animated active"
+                  >
+      <router-view></router-view>
+      </transition>
+    <!-- </keep-alive> -->
   </div>
 </template>
 <script>
@@ -27,7 +30,7 @@ export default {
       rank: [],
       ops: {
         vuescroll: {
-          mode: 'native',
+          mode: 'slide',
           sizeStrategy: 'percent',
           detectResize: true
         },
@@ -47,7 +50,7 @@ export default {
       console.log(this)
     },
     getListDetail (id) {
-      // this.$router.push({path: `/rank/${id}`})
+      this.$router.push({path: `/rank/${id}`})
     }
   },
   computed: {
@@ -60,10 +63,12 @@ export default {
 </script>
 <style lang="stylus" scoped rel="stylesheet/stylus">
 .parent-dom
-  height calc(100% - 5rem)
+  height 100%
   width 100%
-.child-dom
-
+#rank
+  height 100%
+.rankList
+  height calc(100% - 5rem)
 .rank__img
   height 7.5rem
   border-radius 5px
@@ -78,11 +83,13 @@ export default {
   margin 5px
 .update__frequency
   text-align center
+.enterClass
+  opacity 0
+  transform translateX(100%)
+.enterToClass
+  opacity 1
+  transform translateX(0%)
+.active
+  transition all 300ms cubic-bezier(0.000, 0.000, 0.580, 1.000)
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
 </style>
