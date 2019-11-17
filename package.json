@@ -12,12 +12,13 @@
   },
   "dependencies": {
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
+    "element-ui": "^2.12.0",
     "eslint-plugin-html": "^5.0.3",
     "fastclick": "^1.0.6",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.2",
@@ -74,7 +75,7 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-dev-server": "^2.11.5",
     "webpack-merge": "^4.1.0"
   },
   "engines": {

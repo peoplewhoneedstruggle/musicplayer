@@ -6,6 +6,11 @@
       <vue-scroll :ops="ops" >
         <div v-for="item in rank" class="rank" :key="item.id" @click=getListDetail(item.id) >
           <img v-lazy="item.coverImgUrl" class="rank__img" alt="排行榜图片">
+          <!-- <div class="top3List">
+            <div v-for="(tracks,index) in item.tracks" :key="tracks.first">
+            {{index+1}} {{tracks.first}} — {{tracks.second}}
+            </div>
+          </div> -->
           <span class="singer__List animated">{{item.description||item.name}}</span>
         </div>
       </vue-scroll>
@@ -44,7 +49,7 @@ export default {
   },
   methods: {
     getRank () {
-      this.axios.get('http://localhost:3000/toplist/detail').then(response => {
+      this.axios.get(`${this.global.myUrl}/toplist/detail`).then(response => {
         this.rank = [...response.data.list]
       })
       console.log(this)
@@ -55,7 +60,6 @@ export default {
   },
   computed: {
     toggleShow: function () {
-      console.log(this.$route.meta.show)
       return this.$route.meta.show
     }
   }
@@ -91,5 +95,10 @@ export default {
   transform translateX(0%)
 .active
   transition all 300ms cubic-bezier(0.000, 0.000, 0.580, 1.000)
-
+.top3List
+  display flex
+  flex-direction column
+  justify-content space-around
+  padding 1rem 0.5rem
+  font-size 0.8rem
 </style>

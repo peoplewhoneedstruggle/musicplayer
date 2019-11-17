@@ -2,8 +2,8 @@
   <div id="app">
     <transition >
       <div class="header" v-show="this.$route.meta.show">
-        <m-header ></m-header>
-        <tab ></tab>
+        <m-header></m-header>
+        <tab></tab>
       </div>
     </transition>
     <keep-alive>

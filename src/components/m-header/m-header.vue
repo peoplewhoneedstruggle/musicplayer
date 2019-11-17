@@ -3,7 +3,7 @@
     <div class="icon"></div>
     <h1 class="text">Vue music player</h1>
     <router-link tag="div" class="mine" to="/user">
-      <i class="icon-mine"></i>
+      <i class="iconfont icon-yonghu"></i>
     </router-link>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {}
     position: absolute;
     top: 0;
     right: 0;
-    .icon-mine {
+    .icon-yonghu {
       display: block;
       padding: 12px;
       font-size: 20px;

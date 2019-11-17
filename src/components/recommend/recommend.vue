@@ -1,23 +1,30 @@
 <template>
-  <div  class="parent-dom">
-    <vue-scroll :ops="ops" >
-      <div class="child-dom">
-        <swiper :options="swiperOption">
-          <swiper-slide v-for="item in banner" :key=item.imageUrl >
-            <img :data-src=item.imageUrl class="banner swiper-lazy">
-          </swiper-slide>
-          <div class="swiper-pagination banner__dot"></div>
-        </swiper>
-        <div class="songtitle">推荐歌单 ></div>
-        <div class="songList">
-          <div class="songList__song" v-for="item in songList" :key=item.picUrl >
+  <div  class="parent-dom" >
+    <transition >
+      <vue-scroll :ops="ops" v-show="toggleShow">
+        <div class="child-dom">
+          <swiper :options="swiperOption">
+            <swiper-slide v-for="item in banner" :key=item.imageUrl >
+              <img :data-src=item.imageUrl class="banner swiper-lazy">
+            </swiper-slide>
+            <div class="swiper-pagination banner__dot"></div>
+          </swiper>
+          <div class="songtitle">推荐歌单 ></div>
+          <div class="songList">
+            <div class="songList__song" v-for="item in songList" :key=item.picUrl >
               <div class="songList__listens">{{fomate(item.playCount)}}</div>
-            <img v-lazy="item.picUrl" class="songList__img" alt="歌单背景图" @click="getListDetail(item.id)">
-            <div class="songList__text">{{item.name}}</div>
+              <img v-lazy="item.picUrl" class="songList__img" alt="歌单背景图" @click="getListDetail(item.id)">
+              <div class="songList__text">{{item.name}}</div>
+            </div>
           </div>
         </div>
-      </div>
-    </vue-scroll>
+      </vue-scroll>
+    </transition >
+    <!-- <keep-alive> -->
+    <transition enter-class="enterClass" enter-to-class="enterToClass" enter-active-class="animated active">
+    <router-view></router-view>
+    </transition>
+    <!-- </keep-alive> -->
   </div>
 </template>
 <script>
@@ -79,16 +86,18 @@ export default {
     swiperSlide
   },
   computed: {
-
+    toggleShow: function () {
+      return this.$route.meta.show
+    }
   },
   methods: {
     getBanner () {
-      this.axios.get('http://localhost:3000/banner').then(response => {
+      this.axios.get(`${this.global.myUrl}/banner`).then(response => {
         this.banner = [...response.data.banners]
       })
     },
     getSongList () {
-      this.axios.get('http://localhost:3000/personalized').then(response => {
+      this.axios.get(`${this.global.myUrl}/personalized`).then(response => {
         this.songList = [...response.data.result]
       })
     },
