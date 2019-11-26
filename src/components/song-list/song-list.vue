@@ -51,9 +51,13 @@ export default {
   },
   methods: {
     getUserSongList () {
-      this.axios.get(`${this.global.myUrl}/user/playlist?uid=${this.global.userId}`).then(response => {
-        this.userSongList = response.data.playlist
-      })
+      if (this.global.userId) {
+        this.axios.get(`${this.global.myUrl}/user/playlist?uid=${this.global.userId}`).then(response => {
+          this.userSongList = response.data.playlist
+        })
+      } else {
+        this.$router.push({path: '/user'})
+      }
     },
     getSongListDetail (songListId) {
       this.$router.push({path: `/song-list/${songListId}`})

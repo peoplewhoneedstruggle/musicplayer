@@ -50,14 +50,18 @@ Vue.use(animate)
 fastclick.attach(document.body)
 
 /* eslint-disable */
-new Vue({
+var vm=new Vue({
     el: '#app',
     render: h => h(App),
     router
 })
 router.beforeEach((to, from, next) => {
-    if (to.meta.title) {
-        document.title = to.meta.title
+  if (to.meta.title) {
+    //用户没登录就跳转到登录页面
+    if (to.meta.title==="歌单页面"&&!vm.global.userId) {
+      vm.$router.push({path:"/user"})
     }
+    document.title = to.meta.title
     next()
+  }
 })

@@ -4,8 +4,9 @@
       <!-- <div class="tnt" @click="go" leave-class="leaveClass" leave-to-class="leaveToClass" leave-active-class="animated bounceOutRight">666</div> -->
     <!-- </transition> -->
     <div class="header">
-      <p @click="back"><i>&lt;</i></p>
+      <i  @click="back" class="iconfont icon-fanhui back"></i>
     </div>
+    <vue-scroll :ops="ops" >
     <div class="songList">
       <div v-for="(song,index) in songList" :key=song.id class="songItem">
         <div class="songIndex">{{index+1}}</div>
@@ -16,18 +17,32 @@
           <p class="album">{{"—— "+song.al.name}}</p>
         </div>
         </div>
-        <div @click="playMusic(song.id)">
+        <div @click="playMusic(song)">
           <i class="iconfont icon-bofang" ></i>
         </div>
       </div>
     </div>
+    </vue-scroll>
   </div>
 </template>
 <script>
+import eventBus from '../event-bus/event-bus'
 export default {
   data () {
     return {
-      songList: []
+      songList: [],
+      ops: {
+        vuescroll: {
+          mode: 'slide',
+          sizeStrategy: 'percent',
+          detectResize: true
+        },
+        scrollPanel: {
+          scrollingX: false
+        },
+        rail: {},
+        bar: {}
+      }
     }
   },
   mounted () {
@@ -42,12 +57,14 @@ export default {
     },
     getSongList () {
       this.axios.get(`${this.global.myUrl}/playlist/detail?id=${this.$route.params.id}`).then(response => {
-        console.log(response)
         this.songList = [...response.data.playlist.tracks]
       })
     },
-    playMusic (songId) {
-      this.$router.push({path: `/play-page/${songId}`})
+    playMusic (song) {
+      this.$router.push({path: `/play-page/${song.id}`})
+      this.$nextTick(function () {
+        eventBus.$emit('song', song)
+      })
     }
   }
 }
@@ -58,7 +75,11 @@ export default {
   height 100%
 .header
   height 2.5rem
-  padding 1rem 2rem
+  padding 1rem 2rem 0 1rem
+.back
+  line-height 2.5rem
+  display inline-block
+  width 1.5rem
 // .leaveClass
 //   opacity 1
 //   transform translateX(100%)
@@ -68,7 +89,6 @@ export default {
 // .leaveActiveClass
 //   transform all 300ms cubic-bezier(0.000, 0.000, 0.580, 1.000)
 .songItem
-  width 100%
   height 2rem
   padding 0.5rem
   text-align left

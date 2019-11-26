@@ -55,7 +55,7 @@ export default {
       console.log(this)
     },
     getListDetail (id) {
-      this.$router.push({path: `/rank/${id}`})
+      this.$router.push({path: `/rank-list/${id}`})
     }
   },
   computed: {

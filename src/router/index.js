@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Recommend from 'components/recommend/recommend'
 import Singer from 'components/song-list/song-list'
-import Rank from 'components/rank/rank'
+import Rank from 'components/rank-list/rank-list'
 import Search from 'components/search/search'
 import RankDetail from 'components/rank-detail/rank-detail'
 import User from 'components/user/user'
@@ -35,7 +35,7 @@ export default new Router({
     name: '',
     component: Singer,
     meta: {
-      title: '歌单页面',
+      title: '我的歌单',
       show: true
     },
     children: [{
@@ -47,7 +47,7 @@ export default new Router({
       }
     }]
   }, {
-    path: '/rank',
+    path: '/rank-list',
     name: '',
     component: Rank,
     meta: {
